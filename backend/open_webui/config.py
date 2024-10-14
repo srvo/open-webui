@@ -540,48 +540,47 @@ Path(FUNCTIONS_DIR).mkdir(parents=True, exist_ok=True)
 # OLLAMA_BASE_URL
 ####################################
 
-
 ENABLE_OLLAMA_API = PersistentConfig(
     "ENABLE_OLLAMA_API",
     "ollama.enable",
     os.environ.get("ENABLE_OLLAMA_API", "True").lower() == "true",
 )
 
-OLLAMA_API_BASE_URL = os.environ.get(
-    "OLLAMA_API_BASE_URL", "http://localhost:11434/api"
-)
+# OLLAMA_API_BASE_URL = os.environ.get(
+#     "OLLAMA_API_BASE_URL", "http://localhost:11434/api"
+# )
 
-OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "")
+# OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "")
 
-K8S_FLAG = os.environ.get("K8S_FLAG", "")
-USE_OLLAMA_DOCKER = os.environ.get("USE_OLLAMA_DOCKER", "false")
+# K8S_FLAG = os.environ.get("K8S_FLAG", "")
+# USE_OLLAMA_DOCKER = os.environ.get("USE_OLLAMA_DOCKER", "false")
 
-if OLLAMA_BASE_URL == "" and OLLAMA_API_BASE_URL != "":
-    OLLAMA_BASE_URL = (
-        OLLAMA_API_BASE_URL[:-4]
-        if OLLAMA_API_BASE_URL.endswith("/api")
-        else OLLAMA_API_BASE_URL
-    )
+# if OLLAMA_BASE_URL == "" and OLLAMA_API_BASE_URL != "":
+#     OLLAMA_BASE_URL = (
+#         OLLAMA_API_BASE_URL[:-4]
+#         if OLLAMA_API_BASE_URL.endswith("/api")
+#         else OLLAMA_API_BASE_URL
+#     )
 
-if ENV == "prod":
-    if OLLAMA_BASE_URL == "/ollama" and not K8S_FLAG:
-        if USE_OLLAMA_DOCKER.lower() == "true":
-            # if you use all-in-one docker container (Open WebUI + Ollama)
-            # with the docker build arg USE_OLLAMA=true (--build-arg="USE_OLLAMA=true") this only works with http://localhost:11434
-            OLLAMA_BASE_URL = "http://localhost:11434"
-        else:
-            OLLAMA_BASE_URL = "http://host.docker.internal:11434"
-    elif K8S_FLAG:
-        OLLAMA_BASE_URL = "http://ollama-service.open-webui.svc.cluster.local:11434"
+# if ENV == "prod":
+#     if OLLAMA_BASE_URL == "/ollama" and not K8S_FLAG:
+#         if USE_OLLAMA_DOCKER.lower() == "true":
+#             # if you use all-in-one docker container (Open WebUI + Ollama)
+#             # with the docker build arg USE_OLLAMA=true (--build-arg="USE_OLLAMA=true") this only works with http://localhost:11434
+#             OLLAMA_BASE_URL = "http://localhost:11434"
+#         else:
+#             OLLAMA_BASE_URL = "http://host.docker.internal:11434"
+#     elif K8S_FLAG:
+#         OLLAMA_BASE_URL = "http://ollama-service.open-webui.svc.cluster.local:11434"
 
 
-OLLAMA_BASE_URLS = os.environ.get("OLLAMA_BASE_URLS", "")
-OLLAMA_BASE_URLS = OLLAMA_BASE_URLS if OLLAMA_BASE_URLS != "" else OLLAMA_BASE_URL
+# OLLAMA_BASE_URLS = os.environ.get("OLLAMA_BASE_URLS", "")
+# OLLAMA_BASE_URLS = OLLAMA_BASE_URLS if OLLAMA_BASE_URLS != "" else OLLAMA_BASE_URL
 
-OLLAMA_BASE_URLS = [url.strip() for url in OLLAMA_BASE_URLS.split(";")]
-OLLAMA_BASE_URLS = PersistentConfig(
-    "OLLAMA_BASE_URLS", "ollama.base_urls", OLLAMA_BASE_URLS
-)
+# OLLAMA_BASE_URLS = [url.strip() for url in OLLAMA_BASE_URLS.split(";")]
+# OLLAMA_BASE_URLS = PersistentConfig(
+#     "OLLAMA_BASE_URLS", "ollama.base_urls", OLLAMA_BASE_URLS
+# )
 
 ####################################
 # OPENAI_API
@@ -595,7 +594,7 @@ ENABLE_OPENAI_API = PersistentConfig(
 )
 
 
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
+OPENAI_API_KEY = "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"
 OPENAI_API_BASE_URL = os.environ.get("OPENAI_API_BASE_URL", "")
 
 
@@ -788,7 +787,7 @@ def validate_cors_origin(origin):
 # To test CORS_ALLOW_ORIGIN locally, you can set something like
 # CORS_ALLOW_ORIGIN=http://localhost:5173;http://localhost:8080
 # in your .env file depending on your frontend port, 5173 in this case.
-CORS_ALLOW_ORIGIN = os.environ.get("CORS_ALLOW_ORIGIN", "*").split(";")
+CORS_ALLOW_ORIGIN = os.environ.get("CORS_ALLOW_ORIGIN", "http://localhost:5173").split(";")
 
 if "*" in CORS_ALLOW_ORIGIN:
     log.warning(
