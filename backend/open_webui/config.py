@@ -594,7 +594,7 @@ ENABLE_OPENAI_API = PersistentConfig(
 )
 
 
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 OPENAI_API_BASE_URL = os.environ.get("OPENAI_API_BASE_URL", "")
 
 
@@ -621,17 +621,6 @@ OPENAI_API_BASE_URLS = [
 OPENAI_API_BASE_URLS = PersistentConfig(
     "OPENAI_API_BASE_URLS", "openai.api_base_urls", OPENAI_API_BASE_URLS
 )
-
-OPENAI_API_KEY = ""
-
-try:
-    OPENAI_API_KEY = OPENAI_API_KEYS.value[
-        OPENAI_API_BASE_URLS.value.index("https://api.openai.com/v1")
-    ]
-except Exception:
-    pass
-
-OPENAI_API_BASE_URL = "https://api.openai.com/v1"
 
 ####################################
 # WEBUI
@@ -1050,7 +1039,7 @@ RAG_OPENAI_API_BASE_URL = PersistentConfig(
 RAG_OPENAI_API_KEY = PersistentConfig(
     "RAG_OPENAI_API_KEY",
     "rag.openai_api_key",
-    os.getenv("RAG_OPENAI_API_KEY", OPENAI_API_KEY),
+    os.getenv("RAG_OPENAI_API_KEY", ""),
 )
 
 ENABLE_RAG_LOCAL_WEB_FETCH = (
@@ -1372,7 +1361,7 @@ IMAGES_OPENAI_API_BASE_URL = PersistentConfig(
 IMAGES_OPENAI_API_KEY = PersistentConfig(
     "IMAGES_OPENAI_API_KEY",
     "image_generation.openai.api_key",
-    os.getenv("IMAGES_OPENAI_API_KEY", OPENAI_API_KEY),
+    os.getenv("IMAGES_OPENAI_API_KEY", ""),
 )
 
 IMAGE_SIZE = PersistentConfig(
@@ -1402,7 +1391,7 @@ AUDIO_STT_OPENAI_API_BASE_URL = PersistentConfig(
 AUDIO_STT_OPENAI_API_KEY = PersistentConfig(
     "AUDIO_STT_OPENAI_API_KEY",
     "audio.stt.openai.api_key",
-    os.getenv("AUDIO_STT_OPENAI_API_KEY", OPENAI_API_KEY),
+    os.getenv("AUDIO_STT_OPENAI_API_KEY", ""),
 )
 
 AUDIO_STT_ENGINE = PersistentConfig(
@@ -1425,7 +1414,7 @@ AUDIO_TTS_OPENAI_API_BASE_URL = PersistentConfig(
 AUDIO_TTS_OPENAI_API_KEY = PersistentConfig(
     "AUDIO_TTS_OPENAI_API_KEY",
     "audio.tts.openai.api_key",
-    os.getenv("AUDIO_TTS_OPENAI_API_KEY", OPENAI_API_KEY),
+    os.getenv("AUDIO_TTS_OPENAI_API_KEY", ""),
 )
 
 AUDIO_TTS_API_KEY = PersistentConfig(
@@ -1472,3 +1461,4 @@ AUDIO_TTS_AZURE_SPEECH_OUTPUT_FORMAT = PersistentConfig(
         "AUDIO_TTS_AZURE_SPEECH_OUTPUT_FORMAT", "audio-24khz-160kbitrate-mono-mp3"
     ),
 )
+</read_file>
